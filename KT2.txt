@@ -1,0 +1,28 @@
+#Для настройки групповой роли сначала нужно создать саму роль
+
+CREATE ROLE karino4ka;
+
+#Для создания пользователя с ролью karino4ka в PostgreSQL можно выполнить следующую команду в интерфейсе командной строки psql:
+
+CREATE USER vlazneva WITH PASSWORD '123' LOGIN;
+
+#После того как групповая роль создана, в неё можно добавлять или удалять членов, используякоманды GRANT и REVOKE:
+
+GRANT karino4ka TO vlazneva;
+
+#2. Для добавления прав на запросы SELECT на таблицу "kari" для роли "karino4ka" можно выполнить следующую команду:
+
+GRANT SELECT ON kari TO karino4ka;
+
+#3. Для запрета запросов INSERT на таблицу "kari" для роли "karino4ka" можно выполнить следующую команду:
+
+REVOKE INSERT ON kari FROM karino4ka;
+
+#2. Зайдем в PostgreSQL от имени пользователя с ролью karino4ka:
+
+psql kari -U vlazneva  -h 127.0.0.1k
+
+#Для удаления групповой роли используется DROP ROLE:
+
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public from karino4ka;
+DROP ROLE vlazneva;
